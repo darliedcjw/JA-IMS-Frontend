@@ -5,6 +5,7 @@ import Upsert from "./Components/Upsert";
 import Background from "./Components/Background";
 import Query from "./Components/Query";
 import IMSContextProvider from "./Context/IMSContextProvider";
+import Display from "./Components/Display";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -12,6 +13,7 @@ createRoot(document.getElementById("root")!).render(
       <Background />
       <Upsert />
       <Query />
+      <Display />
     </IMSContextProvider>
   </StrictMode>
 );
