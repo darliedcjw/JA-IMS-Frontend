@@ -240,7 +240,7 @@ const Query = () => {
                   transition
                   className="z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm"
                 >
-                  {categories.map((category) => (
+                  {categories?.map((category) => (
                     <ListboxOption
                       key={category}
                       value={category}
