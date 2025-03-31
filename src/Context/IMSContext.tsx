@@ -8,6 +8,13 @@ type Item = {
   price: number;
 };
 
+type AdvanceItemResponse = {
+  items: Item[];
+  count: number;
+  page: number;
+  limit: number;
+};
+
 type IMSContextType = {
   itemID: number | null;
   setItemID: React.Dispatch<React.SetStateAction<number | null>>;
@@ -15,6 +22,10 @@ type IMSContextType = {
   setItems: React.Dispatch<React.SetStateAction<Item[]>>;
   totalPrice: number | null;
   setTotalPrice: React.Dispatch<React.SetStateAction<number | null>>;
+  advanceItemsResponse: AdvanceItemResponse;
+  setAdvanceItemsResponse: React.Dispatch<
+    React.SetStateAction<AdvanceItemResponse>
+  >;
 };
 
 export const IMSContext = createContext<IMSContextType>({
@@ -24,4 +35,11 @@ export const IMSContext = createContext<IMSContextType>({
   setItems: () => {},
   totalPrice: null,
   setTotalPrice: () => {},
+  advanceItemsResponse: {
+    items: [],
+    count: 0,
+    page: 1,
+    limit: 10,
+  },
+  setAdvanceItemsResponse: () => {},
 });
