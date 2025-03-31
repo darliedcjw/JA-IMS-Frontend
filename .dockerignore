@@ -1,0 +1,7 @@
+node_modules
+dist
+Docker/*
+BashScripts/*
+.git
+.gitignore
+.dockerignore

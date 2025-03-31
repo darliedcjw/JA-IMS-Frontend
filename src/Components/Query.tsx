@@ -26,10 +26,16 @@ const Query = () => {
   const [selected, setSelected] = useState<string>("Select All Categories");
   const { itemID, setItems, setTotalPrice } = useContext(IMSContext);
 
+  const backendHOST = import.meta.env.VITE_BACKEND_HOST;
+  const backendPORT = import.meta.env.VITE_BACKEND_PORT;
+
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await axios.post("http://127.0.0.1:2000/query", {});
+        const response = await axios.post(
+          `${backendHOST}:${backendPORT}/query`,
+          {}
+        );
         const items = response.data.items;
         const uniqueCategories = Array.from(
           new Set(items.map((item: Item) => item.category))
@@ -97,7 +103,10 @@ const Query = () => {
         payload.category = data.category;
       }
 
-      const response = await axios.post("http://127.0.0.1:2000/query", payload);
+      const response = await axios.post(
+        `${backendHOST}:${backendPORT}/query`,
+        payload
+      );
       setItems(response.data.items);
       setTotalPrice(response.data.total_price);
     } catch (error) {

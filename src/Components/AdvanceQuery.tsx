@@ -42,10 +42,16 @@ const AdvanceQuery = () => {
   const sortFields = ["name", "category", "price"];
   const sortOrders = ["asc", "desc"];
 
+  const backendHOST = import.meta.env.VITE_BACKEND_HOST;
+  const backendPORT = import.meta.env.VITE_BACKEND_PORT;
+
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await axios.post("http://127.0.0.1:2000/query", {});
+        const response = await axios.post(
+          `${backendHOST}:${backendPORT}/query`,
+          {}
+        );
         const items = response.data.items;
         const uniqueCategories = Array.from(
           new Set(items.map((item: Item) => item.category))
@@ -131,7 +137,7 @@ const AdvanceQuery = () => {
       };
 
       const response = await axios.post(
-        "http://127.0.0.1:2000/advance-query",
+        `${backendHOST}:${backendPORT}/query`,
         payload
       );
       setAdvanceItemsResponse(response.data);

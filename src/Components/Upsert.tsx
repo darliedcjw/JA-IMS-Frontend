@@ -25,11 +25,12 @@ const Upsert = () => {
   // API -> Upsert
   const onSubmit: SubmitHandler<UpsertInputs> = async (payload) => {
     try {
+      const backendHOST = import.meta.env.VITE_BACKEND_HOST;
+      const backendPORT = import.meta.env.VITE_BACKEND_PORT;
       const response = await axios.post(
-        "http://127.0.0.1:2000/upsert",
+        `${backendHOST}:${backendPORT}/upsert`,
         payload
       );
-      console.log(response.data.id);
       setItemID(response.data.id);
       reset();
     } catch (error) {

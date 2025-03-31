@@ -1,0 +1,37 @@
+# Stage 1: Build the Vite app
+FROM node:20-alpine AS builder
+
+# Accept build arguments
+ARG VITE_BACKEND_HOST
+ARG VITE_BACKEND_PORT
+
+# Set environment variables
+ENV VITE_BACKEND_HOST=$VITE_BACKEND_HOST
+ENV VITE_BACKEND_PORT=$VITE_BACKEND_PORT
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json to leverage caching
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy all application files into the container
+COPY . .
+
+# Build the app for production
+RUN npm run build
+
+# Stage 2: Serve the app with Nginx
+FROM nginx:stable-alpine AS production
+
+# Copy built files from the previous stage to Nginx's HTML directory
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Expose port 80 for the container
+EXPOSE 80
+
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]
