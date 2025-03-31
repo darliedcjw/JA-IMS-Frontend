@@ -2,12 +2,7 @@ import axios from "axios";
 import { useEffect, useContext } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { IMSContext } from "../Context/IMSContext";
-
-type Inputs = {
-  name: string;
-  price: number;
-  category: string;
-};
+import { UpsertInputs } from "../Type/Type";
 
 const Upsert = () => {
   const {
@@ -16,7 +11,7 @@ const Upsert = () => {
     formState: { isDirty, errors },
     setError,
     reset,
-  } = useForm<Inputs>();
+  } = useForm<UpsertInputs>();
 
   const { itemID, setItemID } = useContext(IMSContext);
 
@@ -28,7 +23,7 @@ const Upsert = () => {
   }, [isDirty]);
 
   // API -> Upsert
-  const onSubmit: SubmitHandler<Inputs> = async (payload) => {
+  const onSubmit: SubmitHandler<UpsertInputs> = async (payload) => {
     try {
       const response = await axios.post(
         "http://127.0.0.1:2000/upsert",

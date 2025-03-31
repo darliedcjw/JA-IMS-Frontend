@@ -11,19 +11,7 @@ import {
 import { ChevronUpDownIcon } from "@heroicons/react/16/solid";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import { IMSContext } from "../Context/IMSContext";
-
-type Inputs = {
-  dt_from: Date | null;
-  dt_to: Date | null;
-  category: string | null;
-};
-
-type Item = {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-};
+import { QueryInputs, Item } from "../Type/Type";
 
 const Query = () => {
   const {
@@ -32,7 +20,7 @@ const Query = () => {
     formState: { errors },
     setError,
     setValue,
-  } = useForm<Inputs>();
+  } = useForm<QueryInputs>();
 
   const [categories, setCategories] = useState<string[] | null>([]);
   const [selected, setSelected] = useState<string>("Select All Categories");
@@ -43,8 +31,6 @@ const Query = () => {
       try {
         const response = await axios.post("http://127.0.0.1:2000/query", {});
         const items = response.data.items;
-
-        // Get unique categories with proper typing
         const uniqueCategories = Array.from(
           new Set(items.map((item: Item) => item.category))
         ) as string[];
@@ -95,7 +81,7 @@ const Query = () => {
     setValue("category", selected);
   }, [selected]);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<QueryInputs> = async (data) => {
     try {
       const payload: Record<string, string> = {}; // Initialize an empty object
 

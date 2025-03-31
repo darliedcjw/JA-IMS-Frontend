@@ -11,24 +11,7 @@ import {
 import { ChevronUpDownIcon } from "@heroicons/react/16/solid";
 import { CheckIcon } from "@heroicons/react/20/solid";
 import { IMSContext } from "../Context/IMSContext";
-
-type Inputs = {
-  name: string;
-  category: string;
-  price_min: number;
-  price_max: number;
-  page: number;
-  limit: number;
-  sort_field: string;
-  sort_order: string;
-};
-
-type Item = {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-};
+import { AdvanceQueryInputs, Item } from "../Type/Type";
 
 const AdvanceQuery = () => {
   const {
@@ -37,7 +20,7 @@ const AdvanceQuery = () => {
     formState: { errors },
     setError,
     setValue,
-  } = useForm<Inputs>({
+  } = useForm<AdvanceQueryInputs>({
     defaultValues: {
       name: "",
       category: "",
@@ -64,8 +47,6 @@ const AdvanceQuery = () => {
       try {
         const response = await axios.post("http://127.0.0.1:2000/query", {});
         const items = response.data.items;
-
-        // Get unique categories with proper typing
         const uniqueCategories = Array.from(
           new Set(items.map((item: Item) => item.category))
         ) as string[];
@@ -123,7 +104,7 @@ const AdvanceQuery = () => {
     }
   };
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<AdvanceQueryInputs> = async (data) => {
     try {
       const filters: Record<string, string | number[]> = {};
 
