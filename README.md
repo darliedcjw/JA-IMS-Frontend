@@ -15,7 +15,7 @@ Ensure the following software is installed on your system before proceeding:
 Clone the project repository from GitHub:
 
 ```bash
-git clone https://github.com/darliedcjw/JA-IMS-Backend.git
+git clone https://github.com/darliedcjw/JA-IMS-Frontend.git
 ```
 
 # Running the Backend Locally
