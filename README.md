@@ -1,54 +1,67 @@
-# React + TypeScript + Vite
+# Project Setup and Execution Guide
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This guide provides comprehensive instructions for setting up and running the frontend application. The provided Bash script automates tasks such as virtual environment creation, database initialization (test and live), and application execution. Additionally, Docker Compose can be used to streamline the deployment of the entire service stack.
 
-Currently, two official plugins are available:
+Prerequisites
+Ensure the following software is installed on your system before proceeding:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- git
+- npm (Node.js package manager)
+- Docker
+- bash
 
-## Expanding the ESLint configuration
+# Cloning the Repository
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Clone the project repository from GitHub:
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+git clone https://github.com/darliedcjw/JA-IMS-Backend.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+# Running the Backend Locally
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+To run the frontend code locally, follow these steps:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+1. Navigate to the `JA-IMS-Frontend` directory:
+
+```bash
+cd JA-IMS-Frontend
 ```
+
+2. Use the RunDev.sh script to:
+
+- Install Node.js packages.
+- Build the application using Vite for production.
+- Run a preview of the production build.
+  Execute the script with:
+
+```bash
+bash BashScripts/RunDev.sh
+```
+
+The frontend application can be accessed via via `http://localhost:8080`
+
+# [Optional] Running Services via Docker
+
+If you prefer a quick way to deploy all services (JA-IMS-Frontend, JA-IMS-Backend, and MySQL Database), you can use Docker Compose. Note that this method is not recommended if you plan to run integration tests locally, as it bypasses unit testing (only applicable to backend application's unittest).
+
+**Steps**:
+
+1. Use Docker Compose to start the service stack:
+
+```bash
+docker compose -f Docker/docker-compose.yml up
+```
+
+2. Once deployed, access the `JA-IMS-Frontend` and `JA-IMS-Backend` service via your browser at:
+
+- `JA-IMS-Frontend` Service - `http://localhost:8080`
+- `JA-IMS-Backend` Service - `http://localhost:2000`
+
+This method provides a fast and easy way to compose and run all services in a containerized environment.
+
+# Notes
+
+The local setup (RunDev.sh) is recommended for development purposes, as it includes integration tests. This can be easily adapted for CI/CD integration (e.g. AWS CodeBuild) to Kubernetes deployment.
+
+The Docker Compose method is ideal for quickly deploying all services in testing environments without running integration tests.

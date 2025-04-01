@@ -45,7 +45,9 @@ const Display = () => {
               </div>
             )}
             <div className="mt-4 text-sm font-bold flex justify-end">
-              {totalPrice && <p>Total Price: SGD {totalPrice}</p>}
+              {items && items.length > 0 && (
+                <p>Total Price: SGD {totalPrice}</p>
+              )}
             </div>
           </div>
         </div>
