@@ -17,6 +17,7 @@ const AdvanceQuery = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
     setError,
     setValue,
@@ -137,7 +138,7 @@ const AdvanceQuery = () => {
       };
 
       const response = await axios.post(
-        `${backendHOST}:${backendPORT}/query`,
+        `${backendHOST}:${backendPORT}/advance-query`,
         payload
       );
       setAdvanceItemsResponse(response.data);
@@ -273,6 +274,12 @@ const AdvanceQuery = () => {
                       required: "Minimum price is required",
                       valueAsNumber: true,
                       min: { value: 0, message: "Price must be positive" },
+                      validate: (value: number) => {
+                        if (value > watch("price_max")) {
+                          return "Minimum price cannot be more than Maximum price";
+                        }
+                        return true;
+                      },
                     })}
                     id="price_min"
                     type="number"
@@ -304,6 +311,12 @@ const AdvanceQuery = () => {
                       required: "Maximum price is required",
                       valueAsNumber: true,
                       min: { value: 0, message: "Price must be positive" },
+                      validate: (value: number) => {
+                        if (value < watch("price_min")) {
+                          return "Maximum price cannot be less than Minimum price";
+                        }
+                        return true;
+                      },
                     })}
                     id="price_max"
                     type="number"
