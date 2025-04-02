@@ -18,7 +18,7 @@ Clone the project repository from GitHub:
 git clone https://github.com/darliedcjw/JA-IMS-Frontend.git
 ```
 
-# Running the Backend Locally
+# Running the Frontend Locally
 
 To run the frontend code locally, follow these steps:
 
