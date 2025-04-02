@@ -17,6 +17,7 @@ const Query = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
     setError,
     setValue,
@@ -166,7 +167,21 @@ const Query = () => {
               <div className="mt-2">
                 <div className="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                   <input
-                    {...register("dt_from")}
+                    {...register("dt_from", {
+                      validate: (value) => {
+                        const dtTo = watch("dt_to");
+
+                        if (!value || !dtTo) return true;
+
+                        const fromDate = new Date(value);
+                        const toDate = new Date(dtTo);
+
+                        if (fromDate > toDate) {
+                          return "Start date cannot be after end date";
+                        }
+                        return true;
+                      },
+                    })}
                     id="dt_from"
                     name="dt_from"
                     type="datetime-local"
@@ -196,7 +211,21 @@ const Query = () => {
               <div className="mt-2">
                 <div className="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
                   <input
-                    {...register("dt_to")}
+                    {...register("dt_to", {
+                      validate: (value) => {
+                        const dtFrom = watch("dt_from");
+
+                        if (!value || !dtFrom) return true;
+
+                        const fromDate = new Date(value);
+                        const toDate = new Date(dtFrom);
+
+                        if (fromDate < toDate) {
+                          return "End date cannot be before start date";
+                        }
+                        return true;
+                      },
+                    })}
                     id="dt_to"
                     name="dt_to"
                     type="datetime-local"
