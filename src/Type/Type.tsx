@@ -9,6 +9,13 @@ export type AdvanceQueryInputs = {
   sort_order: string;
 };
 
+export type AdvanceItemResponse = {
+  items: Item[];
+  count: number;
+  page: number;
+  limit: number;
+};
+
 export type QueryInputs = {
   dt_from: Date | null;
   dt_to: Date | null;

@@ -1,19 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { IMSContext } from "./IMSContext";
-
-type Item = {
-  id: number;
-  name: string;
-  category: string;
-  price: number;
-};
-
-type AdvanceItemResponse = {
-  items: Item[];
-  count: number;
-  page: number;
-  limit: number;
-};
+import { Item, AdvanceItemResponse } from "../Type/Type";
 
 const IMSContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [itemID, setItemID] = useState<number | null>(null);
@@ -27,21 +14,23 @@ const IMSContextProvider = ({ children }: { children: React.ReactNode }) => {
       limit: 10,
     });
 
+  // Memoize the context value
+  const contextValue = useMemo(
+    () => ({
+      itemID,
+      setItemID,
+      items,
+      setItems,
+      totalPrice,
+      setTotalPrice,
+      advanceItemsResponse,
+      setAdvanceItemsResponse,
+    }),
+    [itemID, items, totalPrice, advanceItemsResponse] // Dependencies
+  );
+
   return (
-    <IMSContext.Provider
-      value={{
-        itemID,
-        setItemID,
-        items,
-        setItems,
-        totalPrice,
-        setTotalPrice,
-        advanceItemsResponse,
-        setAdvanceItemsResponse,
-      }}
-    >
-      {children}
-    </IMSContext.Provider>
+    <IMSContext.Provider value={contextValue}>{children}</IMSContext.Provider>
   );
 };
 
